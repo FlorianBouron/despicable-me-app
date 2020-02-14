@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/character_details_sreen.dart';
 import '../data/characters.dart';
 import '../style.dart';
 
@@ -9,54 +10,66 @@ class Character extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return Stack(
-      children: <Widget>[
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: ClipPath(
-            clipper: CharacterCardBackgroundClipper(),
-            child: Container(
-              height: 0.55 * screenHeight,
-              width: 0.9 * screenWidth,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: characters[0].colors,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(microseconds: 350),
+            pageBuilder: (context, _, __) =>
+                CharacterDetailsScreen(character: characters[0]),
+          ),
+        );
+      },
+      child: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipPath(
+              clipper: CharacterCardBackgroundClipper(),
+              child: Container(
+                height: 0.55 * screenHeight,
+                width: 0.9 * screenWidth,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: characters[0].colors,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment(0, -0.5),
-          child: Image.asset(
-            characters[0].imagePath,
-            height: screenHeight * 0.55,
+          Align(
+            alignment: Alignment(0, -0.5),
+            child: Image.asset(
+              characters[0].imagePath,
+              height: screenHeight * 0.55,
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 48,
-            right: 16,
-            bottom: 16,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                characters[0].name,
-                style: AppTheme.heading,
-              ),
-              Text(
-                "Tap to Read more",
-                style: AppTheme.subHeading,
-              )
-            ],
-          ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 48,
+              right: 16,
+              bottom: 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  characters[0].name,
+                  style: AppTheme.heading,
+                ),
+                Text(
+                  "Tap to Read more",
+                  style: AppTheme.subHeading,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
