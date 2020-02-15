@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../screens/character_details_sreen.dart';
-import '../data/characters.dart';
+import '../models/character.dart';
 import '../style.dart';
 
-class Character extends StatelessWidget {
+class CharacterWidget extends StatelessWidget {
+  final Character character;
+
+  const CharacterWidget({Key key, this.character}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -17,7 +21,7 @@ class Character extends StatelessWidget {
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 350),
             pageBuilder: (context, _, __) =>
-                CharacterDetailsScreen(character: characters[0]),
+                CharacterDetailsScreen(character: character),
           ),
         );
       },
@@ -28,13 +32,13 @@ class Character extends StatelessWidget {
             child: ClipPath(
               clipper: CharacterCardBackgroundClipper(),
               child: Hero(
-                tag: "background-${characters[0].name}",
+                tag: "background-${character.name}",
                 child: Container(
                   height: 0.6 * screenHeight,
                   width: 0.9 * screenWidth,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: characters[0].colors,
+                      colors: character.colors,
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                     ),
@@ -46,9 +50,9 @@ class Character extends StatelessWidget {
           Align(
             alignment: Alignment(0, -0.5),
             child: Hero(
-              tag: "image-${characters[0].name}",
+              tag: "image-${character.name}",
               child: Image.asset(
-                characters[0].imagePath,
+                character.imagePath,
                 height: screenHeight * 0.55,
               ),
             ),
@@ -64,12 +68,12 @@ class Character extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Hero(
-                  tag: "name-${characters[0].name}",
+                  tag: "name-${character.name}",
                   child: Material(
                     color: Colors.transparent,
                     child: Container(
                       child: Text(
-                        characters[0].name,
+                        character.name,
                         style: AppTheme.heading,
                       ),
                     ),

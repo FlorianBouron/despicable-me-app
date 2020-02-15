@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/character.dart';
+import '../data/characters.dart';
 import '../style.dart';
 
 class CharacterListingScreen extends StatefulWidget {
@@ -9,6 +10,8 @@ class CharacterListingScreen extends StatefulWidget {
 }
 
 class _CharacterListingScreenState extends State<CharacterListingScreen> {
+  PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +52,13 @@ class _CharacterListingScreenState extends State<CharacterListingScreen> {
                 ),
               ),
               Expanded(
-                child: Character(),
+                child: PageView(
+                  controller: _pageController,
+                  children: <Widget>[
+                    for (var i = 0; i < characters.length; i++)
+                      CharacterWidget(character: characters[i])
+                  ],
+                ),
               ),
             ],
           ),
