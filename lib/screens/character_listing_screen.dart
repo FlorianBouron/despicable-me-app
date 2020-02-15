@@ -53,6 +53,7 @@ class _CharacterListingScreenState extends State<CharacterListingScreen> {
               ),
               Expanded(
                 child: PageView(
+                  physics: ClampingScrollPhysics(),
                   controller: _pageController,
                   children: <Widget>[
                     for (var i = 0; i < characters.length; i++)
