@@ -15,7 +15,7 @@ class Character extends StatelessWidget {
         Navigator.push(
           context,
           PageRouteBuilder(
-            transitionDuration: const Duration(microseconds: 350),
+            transitionDuration: const Duration(milliseconds: 350),
             pageBuilder: (context, _, __) =>
                 CharacterDetailsScreen(character: characters[0]),
           ),
@@ -27,14 +27,17 @@ class Character extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: ClipPath(
               clipper: CharacterCardBackgroundClipper(),
-              child: Container(
-                height: 0.55 * screenHeight,
-                width: 0.9 * screenWidth,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: characters[0].colors,
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
+              child: Hero(
+                tag: "background-${characters[0].name}",
+                child: Container(
+                  height: 0.6 * screenHeight,
+                  width: 0.9 * screenWidth,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: characters[0].colors,
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
                   ),
                 ),
               ),
@@ -42,9 +45,12 @@ class Character extends StatelessWidget {
           ),
           Align(
             alignment: Alignment(0, -0.5),
-            child: Image.asset(
-              characters[0].imagePath,
-              height: screenHeight * 0.55,
+            child: Hero(
+              tag: "image-${characters[0].name}",
+              child: Image.asset(
+                characters[0].imagePath,
+                height: screenHeight * 0.55,
+              ),
             ),
           ),
           Padding(
@@ -57,17 +63,25 @@ class Character extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text(
-                  characters[0].name,
-                  style: AppTheme.heading,
+                Hero(
+                  tag: "name-${characters[0].name}",
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      child: Text(
+                        characters[0].name,
+                        style: AppTheme.heading,
+                      ),
+                    ),
+                  ),
                 ),
                 Text(
                   "Tap to Read more",
                   style: AppTheme.subHeading,
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

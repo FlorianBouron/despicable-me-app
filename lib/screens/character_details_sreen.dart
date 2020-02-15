@@ -21,12 +21,15 @@ class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: widget.character.colors,
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
+          Hero(
+            tag: "background-${widget.character.name}",
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: widget.character.colors,
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
               ),
             ),
           ),
@@ -55,9 +58,12 @@ class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
                 ),
                 Align(
                   alignment: Alignment.topRight,
-                  child: Image.asset(
-                    widget.character.imagePath,
-                    height: screenHeight * 0.45,
+                  child: Hero(
+                    tag: "image-${widget.character.name}",
+                    child: Image.asset(
+                      widget.character.imagePath,
+                      height: screenHeight * 0.45,
+                    ),
                   ),
                 ),
                 Padding(
@@ -65,9 +71,17 @@ class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
                     horizontal: 32.0,
                     vertical: 8.0,
                   ),
-                  child: Text(
-                    widget.character.name,
-                    style: AppTheme.heading,
+                  child: Hero(
+                    tag: "name-${widget.character.name}",
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        child: Text(
+                          widget.character.name,
+                          style: AppTheme.heading,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
